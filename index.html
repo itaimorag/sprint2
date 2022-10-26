@@ -88,8 +88,9 @@
         </section>
 
         <section class="meme-editor">
-            <form class="line-form">
+            <form onsubmit="event.preventDefault()" class="line-form">
                 <input oninput="setLineTxt(this.value)" id="line-placeholder" type="text" name="txt" placeholder="type" />
+            </form>
                 <section class="input-btns">
                     <button class="go-up-btn">↑</button>
                     <button class="go-down-btn">↓</button>
