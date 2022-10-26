@@ -50,9 +50,11 @@ function setLineTxt(input){
         renderMeme()
     
 }
-function changeColor(){
-    console.log(`color = ` )
+function changeTextSize(size){
+    gMeme.lines[gMeme.selectedLineIdx].size+=size
+}
+
+function changeColor(color){
     gMeme.lines[gMeme.selectedLineIdx].color=color
-    console.log(`gMeme = `, gMeme)
     renderMeme()
 }

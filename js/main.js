@@ -44,8 +44,8 @@ function showCanvas(imgNumber) {
 function renderMeme(){
     var currMeme=getgMeme()
     const img = new Image()
-    img.src = `./img/meme-imgs (square)/${currMeme.selectedImgId}.jpg`
-    console.log(gCtx.measureText(currMeme.lines[currMeme.selectedLineIdx].txt).width)
+    img.src = `./img/meme-imgs(square)/${currMeme.selectedImgId}.jpg`
+    // console.log(gCtx.measureText(currMeme.lines[currMeme.selectedLineIdx].txt).width)
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         drawText(currMeme.lines[currMeme.selectedLineIdx].txt, currMeme.lines[currMeme.selectedLineIdx].align,currMeme.lines[currMeme.selectedLineIdx].size+30,currMeme.lines[currMeme.selectedLineIdx].size,currMeme.lines[currMeme.selectedLineIdx].color)
@@ -108,6 +108,11 @@ function onUp() {
     document.body.style.cursor = 'context-menu'
 }
 
+function onChangeTextSize(size){
+    changeTextSize(size)
+    renderMeme()
+}
+
 function getEvPos(ev) {
     // console.log(`ev = `, ev)
     //Gets the offset pos , the default pos
@@ -136,12 +141,12 @@ function drawText(text, xPref, y,sizeFont,color) {
           x=20
           break;
         case 'right':
-            console.log(`right = `)
+            // console.log(`right = `)
           x=(gElCanvas.width)- ((gCtx.measureText(text).width)+20)
           break;
           case 'center':
-            console.log(`center = `)
-          x=((gElCanvas.width)/2)-(((gCtx.measureText(text).width)/((10/sizeFont)*2)))
+            // console.log(`center = `)
+          x=((gElCanvas.width)/2)-(((gCtx.measureText(text).width)/(2)))
           break;
         default:
             x=((gElCanvas.width/2))-(((gCtx.measureText(text).width)/((10/sizeFont)*2)))
