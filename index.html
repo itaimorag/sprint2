@@ -88,23 +88,29 @@
         </section>
 
         <section class="meme-editor">
-            <form class="search-bar-form" onchange="onSubmit(event)">
-                <input type="text" name="txt" placeholder="Search" />
+            <form class="line-form">
+                <input oninput="setLineTxt(this.value)" id="line-placeholder" type="text" name="txt" placeholder="type" />
                 <section class="input-btns">
                     <button class="go-up-btn">↑</button>
                     <button class="go-down-btn">↓</button>
                     <button class="change-line-btn">↷</button>
-                    <button class="add-line-btn"><img src="./img/meme-genrator img/+.png" alt=""></button>
-                    <button class="delete-line-btn"><img src="./img/meme-genrator img/Forme_4.png" alt=""></button>
+                    <button class="add-line-btn">+</button>
+                    <button class="delete-line-btn">🗑</button>
                 </section>
                 <section class="txt-btns">
-                    <button class="bigger-txt-btn"><img src="./img/meme-genrator img/A+.png" alt=""></button>
-                    <button class="smaller-txt-btn"><img src="./img/meme-genrator img/A-.png" alt=""></button>
-                    <button class="left-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_3.png" alt=""></button>
-                    <button class="center-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
-                    <button class="right-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
-                    <button class="color-line-btn"><img src="./img/meme-genrator img/Forme_6.png" alt=""></button>
-                </section>
+                    <section class="change-text">
+                        <button class="bigger-txt-btn"><img src="./img/meme-genrator img/A+.png" alt=""></button>
+                        <button class="smaller-txt-btn"><img src="./img/meme-genrator img/A-.png" alt=""></button>
+                        <label for="colorpicker"><img src="./img/meme-genrator img/Forme_6.png" alt=""></label>
+                        <input oninput="changeColor()" type="color" id="colorpicker" value="#000000">
+                        <!-- <button onchange="changeColor()" class="color-line-btn"><img src="./img/meme-genrator img/Forme_6.png" alt=""></button> -->
+                    </section>
+                    <section class="change-position">
+                        <button class="left-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_3.png" alt=""></button>
+                        <button class="center-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
+                        <button class="right-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
+                    </section>
+                    </section>
 
                 <section class="download-share-btns">
                     <button class="btn" onclick="uploadImg()">

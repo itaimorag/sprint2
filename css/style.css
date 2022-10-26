@@ -200,16 +200,10 @@ background-color:#7d7d7d ;
     padding: 60px;
     width: 90vw;
     margin: 0 20px;
-    /* grid-auto-rows: auto; */
   }
-  /* .item {
-    background-color: lightskyblue;
-    font-family: sans-serif;
-    font-weight: bold;
-    font-size: 2em;
-    padding: 13px;
-  } */
+ 
   .grid-container img {
+    border-radius: 20px;
     width: 100%;
     height: 100%;
     grid-column: span 1;
@@ -239,6 +233,78 @@ background-color:#7d7d7d ;
     background-color:#ebeef335 ;
     border-radius: 10px;
   }
+
+  .meme-editor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #line-placeholder{
+    margin-top: 20px;
+    width: 80%;
+    height: 55px;
+    text-align: center;
+    color:#3d3d3d ;
+    font-size: 1.5625rem;
+    font-family: poppins-medium,serif;
+    /* background-color: #22252c; */
+    color: #383b42;
+    border-radius: 50px;
+    /* background-color: transparent; */
+    border: none;
+    box-shadow: inset 0px -3px 5px grey;
+}
+#line-placeholder input{
+    font-family: poppins-medium,serif;
+}
+.input-btns {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.input-btns button{
+    height: 60px;
+    width: 60px;
+  font-size: 25px;
+  box-shadow: inset 0px -2px 3px grey;
+}
+.go-up-btn{
+    background-color: rgb(34, 170, 211);
+}
+.go-down-btn{
+    background-color: rgb(34, 170, 211);
+}
+.change-line-btn{
+    background-color: rgb(34, 170, 211);
+}
+.add-line-btn{
+    background-color: rgba(21, 238, 50, 0.662);
+}
+.delete-line-btn{
+    background-color: rgb(255, 0, 0);
+}
+.txt-btns button{
+    height: 55px;
+    width: 55px;
+}
+.txt-btns{
+background-color:#19a59f ;
+padding: 10px 30px;
+border-radius: 10px;
+}
+
+.change-text{
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-bottom: 7px;
+}
+.change-position{
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+}
 
   .hide{
     display: none;

@@ -38,3 +38,21 @@ var gMeme = {
 function getgMeme(){
     return gMeme
 }
+function updategMeme(idx){
+    gMeme.selectedImgId=idx
+    // console.log(`gMeme = `, gMeme)
+}
+
+function setLineTxt(input){
+    console.log(`input = `, input)
+    
+        gMeme.lines[gMeme.selectedLineIdx].txt=input
+        renderMeme()
+    
+}
+function changeColor(){
+    console.log(`color = ` )
+    gMeme.lines[gMeme.selectedLineIdx].color=color
+    console.log(`gMeme = `, gMeme)
+    renderMeme()
+}

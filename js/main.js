@@ -28,15 +28,30 @@ function onInit(imgNumber) {
 
 
 function showCanvas(imgNumber) {
+     updategMeme(imgNumber.classList.value.substring(3, imgNumber.classList.value.length))
     const img = new Image()
-    img.src = `${imgNumber.src.substring(22, imgNumber.src.length)}`
+    img.src = `.${imgNumber.src.substring(22, imgNumber.src.length)}`
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xEnd,yEnd
         var currMeme= getgMeme()
-        console.log(`foo = `, gCtx.measureText(currMeme.lines[currMeme.selectedLineIdx].txt))
         drawText(currMeme.lines[currMeme.selectedLineIdx].txt, currMeme.lines[currMeme.selectedLineIdx].align,currMeme.lines[currMeme.selectedLineIdx].size+30,currMeme.lines[currMeme.selectedLineIdx].size,currMeme.lines[currMeme.selectedLineIdx].color)
+
+         document.getElementById('line-placeholder').value=currMeme.lines[currMeme.selectedLineIdx].txt
     }
 
+}
+
+function renderMeme(){
+    var currMeme=getgMeme()
+    const img = new Image()
+    img.src = `./img/meme-imgs (square)/${currMeme.selectedImgId}.jpg`
+    console.log(gCtx.measureText(currMeme.lines[currMeme.selectedLineIdx].txt).width)
+    img.onload = () => {
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        drawText(currMeme.lines[currMeme.selectedLineIdx].txt, currMeme.lines[currMeme.selectedLineIdx].align,currMeme.lines[currMeme.selectedLineIdx].size+30,currMeme.lines[currMeme.selectedLineIdx].size,currMeme.lines[currMeme.selectedLineIdx].color)
+
+         document.getElementById('line-placeholder').value=currMeme.lines[currMeme.selectedLineIdx].txt
+}
 }
 
 function addListeners() {
@@ -123,15 +138,13 @@ function drawText(text, xPref, y,sizeFont,color) {
         case 'right':
             console.log(`right = `)
           x=(gElCanvas.width)- ((gCtx.measureText(text).width)+20)
-          console.log(`x = `, x)
           break;
           case 'center':
             console.log(`center = `)
-          x=((gElCanvas.width)/2)-((gCtx.measureText(text).width)/2)
-          console.log(`x = `, x)
+          x=((gElCanvas.width)/2)-(((gCtx.measureText(text).width)/((10/sizeFont)*2)))
           break;
         default:
-            x=((gElCanvas.width/2))-((gCtx.measureText(text).width)/2)
+            x=((gElCanvas.width/2))-(((gCtx.measureText(text).width)/((10/sizeFont)*2)))
           // code block
       }
 
