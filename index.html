@@ -8,9 +8,9 @@
     <title>Sprint 2 MEME GENERATOR</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<!-- onload="onInit()" -->
-<body>
 
+<body onload="onInitGallery()">
+    
     <header class="flex align-center ">
         <section class="container header-wrapper flex  ">
             <div class="logo flex-1">
@@ -19,15 +19,14 @@
             <nav id="mainMenu" class="main-menu-wrapper">
                 <ul class="main-menu clean-list flex align-center">
                     <li>
-                        <button class="active">Gallery</button>
+                        <button onclick="showGallery()" class="gallery active">Gallery</button>
                     </li>
                     <li>
                         <button>About</button>
                     </li>
 
                 </ul>
-                <!-- <button class="toggle-menu-btn fa" onclick="toggleMenu()" alt="Open main menu"></button>
-                <div class="toggle-menu-screen screen" onclick="toggleMenu()" alt="toggle main menu"></div> -->
+              
             </nav>
 
         </section>
@@ -59,24 +58,6 @@
         </section>
 
         <section class="grid-container">
-            <img value="1" class="img1" onclick="onInit(this)" src="./img/meme-imgs(square)/1.jpg" alt="">
-            <img value="2" class="img2" onclick="onInit(this)" src="./img/meme-imgs(square)/2.jpg" alt="">
-            <img value="3" class="img3" onclick="onInit(this)" src="./img/meme-imgs(square)/3.jpg" alt="">
-            <img value="img4" class="img4" onclick="onInit(this)" src="./img/meme-imgs(square)/4.jpg" alt="">
-            <img value="img5" class="img5" onclick="onInit(this)" src="./img/meme-imgs(square)/5.jpg" alt="">
-            <img value="img6" class="img6" onclick="onInit(this)" src="./img/meme-imgs(square)/6.jpg" alt="">
-            <img value="img7" class="img7" onclick="onInit(this)" src="./img/meme-imgs(square)/7.jpg" alt="">
-            <img value="img8" class="img8" onclick="onInit(this)" src="./img/meme-imgs(square)/8.jpg" alt="">
-            <img value="img9" class="img9" onclick="onInit(this)" src="./img/meme-imgs(square)/9.jpg" alt="">
-            <img value="img10" class="img10" onclick="onInit(this)" src="./img/meme-imgs(square)/10.jpg" alt="">
-            <img value="img11" class="img11" onclick="onInit(this)" src="./img/meme-imgs(square)/11.jpg" alt="">
-            <img value="img12" class="img12" onclick="onInit(this)" src="./img/meme-imgs(square)/12.jpg" alt="">
-            <img value="img13" class="img13" onclick="onInit(this)" src="./img/meme-imgs(square)/13.jpg" alt="">
-            <img value="img14" class="img14" onclick="onInit(this)" src="./img/meme-imgs(square)/14.jpg" alt="">
-            <img value="img15" class="img15" onclick="onInit(this)" src="./img/meme-imgs(square)/15.jpg" alt="">
-            <img value="img16" class="img16" onclick="onInit(this)" src="./img/meme-imgs(square)/16.jpg" alt="">
-            <img value="img17" class="img17" onclick="onInit(this)" src="./img/meme-imgs(square)/17.jpg" alt="">
-            <img value="img18" class="img18" onclick="onInit(this)" src="./img/meme-imgs(square)/18.jpg" alt="">
         </section>
     </main>
 
@@ -94,7 +75,7 @@
                 <section class="input-btns">
                     <button class="go-up-btn">↑</button>
                     <button class="go-down-btn">↓</button>
-                    <button class="change-line-btn">↷</button>
+                    <button onclick="changeRow()" class="change-line-btn">↷</button>
                     <button class="add-line-btn">+</button>
                     <button class="delete-line-btn">🗑</button>
                 </section>
@@ -107,9 +88,9 @@
                         <!-- <button onchange="changeColor()" class="color-line-btn"><img src="./img/meme-genrator img/Forme_6.png" alt=""></button> -->
                     </section>
                     <section class="change-position">
-                        <button class="left-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_3.png" alt=""></button>
-                        <button class="center-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
-                        <button class="right-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
+                        <button onclick="onChangePlace(this.value)" value="left" class="left-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_3.png" alt=""></button>
+                        <button onclick="onChangePlace(this.value)" value="center" class="center-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
+                        <button onclick="onChangePlace(this.value)" value="right" class="right-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
                     </section>
                     </section>
 
@@ -136,6 +117,7 @@
     <script src="js/services/upload-service.js"></script>
     <script src="js/services/storage-service.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/gallery-controller.js"></script>
     <script src="js/services/meme-service.js"></script>
     <script src="js/services/util-service.js"></script>
 </body>
