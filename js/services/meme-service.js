@@ -1,7 +1,8 @@
 'use strict'
 
 const SAVED_MEMES_KEY = "savedMemesDB"
-var gSavedMemes = loadFromStorage(SAVED_MEMES_KEY)
+var gSavedMemes = ''
+// loadFromStorage(SAVED_MEMES_KEY)
 var gKeywordSearchCountMap = { 'funny': 12, 'animal': 16, 'men': 10 }
 var gImgs = [
     { id: 1, url: 'img/meme-imgs(square)/1.jpg', keywords: ['men', 'funny'] },
@@ -25,7 +26,7 @@ var gImgs = [
 ];
 var gImgsForDisplay
 var gMeme = {
-    selectedImgId: 5,
+    selectedImgId: 0,
     selectedLineIdx: 0,
     lines: [
         {
@@ -34,8 +35,10 @@ var gMeme = {
             align: 'center',
             color: 'red',
             area: {
-                x: '',
-                j: ''
+                xStart: 0,
+                xFinish: 0,
+                yStart: 0,
+                yfinish: 0
             }
         },
         {
@@ -44,11 +47,18 @@ var gMeme = {
             align: 'left',
             color: 'blue',
             area: {
-                x: '',
-                j: ''
+                xStart: 0,
+                xFinish: 0,
+                yStart: 200,
+                yfinish: 0
             }
         }
     ]
+}
+
+
+function goUpOrDown(value) {
+    gMeme.lines[gMeme.selectedLineIdx].area.yStart += value
 }
 
 function getgKeywordSearchCountMap() {
@@ -108,14 +118,72 @@ function changeColor(color) {
 }
 
 function saveMeme() {
-    if ((!gSavedMemes) || (!gSavedMemes[0])) gSavedMemes = []
-    console.log(`gSavedMemes = `, gSavedMemes)
+    gSavedMemes = loadFromStorage(SAVED_MEMES_KEY)
+    if ((!gSavedMemes) || (!gSavedMemes[0])) { gSavedMemes = [] }
     gSavedMemes.push(gMeme)
-    console.log(`gSavedMemes = `, gSavedMemes)
     saveToStorage(SAVED_MEMES_KEY, gSavedMemes)
 }
 function getSavedMeme() {
-    var hi = loadFromStorage(SAVED_MEMES_KEY)
-    console.log(`hi = `, hi)
-    return hi
+    return loadFromStorage(SAVED_MEMES_KEY)
+}
+
+function checkIfHaveSavedMemes() {
+    return getSavedMeme()
+}
+
+function addLine() {
+    gMeme.lines.push(createLine())
+}
+
+function deleteLine() {
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    if (gMeme.selectedLineIdx !== 0) gMeme.selectedLineIdx--
+}
+
+function createLine() {
+    return ({
+        txt: 'Hello human',
+        size: 20,
+        align: 'center',
+        color: 'black',
+        area: {
+            xStart: 0,
+            xFinish: 0,
+            yStart: 200,
+            yfinish: 0
+        }
+    })
+}
+
+function setgMeme() {
+    gMeme = {
+        selectedImgId: 0,
+        selectedLineIdx: 0,
+        lines: [
+            {
+                txt: 'I sometimes eat Falafel',
+                size: 20,
+                align: 'center',
+                color: 'red',
+                area: {
+                    xStart: 0,
+                    xFinish: 0,
+                    yStart: 0,
+                    yfinish: 0
+                }
+            },
+            {
+                txt: 'Hello world',
+                size: 20,
+                align: 'left',
+                color: 'blue',
+                area: {
+                    xStart: 0,
+                    xFinish: 0,
+                    yStart: 200,
+                    yfinish: 0
+                }
+            }
+        ]
+    }
 }

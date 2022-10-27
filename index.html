@@ -78,11 +78,11 @@
                     placeholder="type" />
             </form>
             <section class="input-btns">
-                <button class="go-up-btn">↑</button>
-                <button class="go-down-btn">↓</button>
+                <button onclick="rowUpDown(this.innerText)" class="go-up-btn">↑</button>
+                <button onclick="rowUpDown(this.innerText)" class="go-down-btn">↓</button>
                 <button onclick="changeRow()" class="change-line-btn">↷</button>
-                <button class="add-line-btn">+</button>
-                <button class="delete-line-btn">🗑</button>
+                <button onclick="onAddLine()" class="add-line-btn">+</button>
+                <button onclick="onDeleteLine()" class="delete-line-btn">🗑</button>
             </section>
             <section class="txt-btns">
                 <section class="change-text">
@@ -123,12 +123,12 @@
 
 
 
-    <script src="js/services/upload-service.js"></script>
-    <script src="js/services/storage-service.js"></script>
-    <script src="js/services/meme-service.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/gallery-controller.js"></script>
-    <script src="js/services/util-service.js"></script>
+    <script defer src="js/services/upload-service.js"></script>
+    <script defer src="js/services/storage-service.js"></script>
+    <script defer src="js/services/meme-service.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/gallery-controller.js"></script>
+    <script defer src="js/services/util-service.js"></script>
 </body>
 
 </html>

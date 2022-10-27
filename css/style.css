@@ -141,12 +141,18 @@ button {
   gap: 30px;
 }
 
+.random-img-btn {
+  font-size: 100px;
+  background: linear-gradient(to right, #c5c54d, #ac2121);
+}
+
 .search-bar-form {
   width: 100%;
   display: flex;
   justify-content: space-around;
   height: 60px;
 }
+
 
 
 
@@ -218,6 +224,8 @@ button {
 .search-bar form input {
   background-color: transparent;
   border: none;
+  color: #ffffff;
+  font-family: poppins-light, serif;
   font-size: 1.3125rem;
 }
 
@@ -273,8 +281,8 @@ canvas {
   justify-content: space-between;
 }
 
-.main-menu .saved-meme-btn{
-  font-size:1rem ;
+.main-menu .saved-meme-btn {
+  font-size: 1rem;
 }
 
 #line-placeholder {
@@ -301,6 +309,12 @@ canvas {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.grid-container .file-input {
+  background-color: #22252c;
+  background: linear-gradient(to right, #1acf11, #930685);
+  color: #09c9c6;
 }
 
 .input-btns button {

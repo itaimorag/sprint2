@@ -2,36 +2,37 @@
 
 
 function onInitGallery() {
+    if (checkIfHaveSavedMemes()) document.querySelector('.main-menu .saved-meme-li').classList.remove('hide')
     var searchMap = getgKeywordSearchCountMap()
     var imgs = getImgsForDisplay()
     var strHtml = ''
     for (const property in searchMap) {
         document.querySelector(`.${property}-btn`).style.fontSize = searchMap[property] + 'px'
     }
+    strHtml += `<button onclick="randomImg()" class="random-img-btn ">❓</button>`
+    strHtml += `<input type="file" class="file-input btn"name="image" onchange="onImgInput(event)"/>`
     for (var i = 0; i < imgs.length; i++) {
         strHtml += `\n<img value="${imgs[i].id}" class="img${imgs[i].id}" onclick="onSelectImg(${imgs[i].id})" src="${imgs[i].url}" alt="">`
     }
-    
     document.querySelector('.grid-container').innerHTML = strHtml
 }
 
 function showSavedMemes() {
-var savedMemes=getSavedMeme()
-var imgs=getgImgs()
-var searchMap = getgKeywordSearchCountMap()
-var strHtml = ''
+    var savedMemes = getSavedMeme()
+    var imgs = getgImgs()
+    var searchMap = getgKeywordSearchCountMap()
+    var strHtml = ''
     for (const property in searchMap) {
         document.querySelector(`.${property}-btn`).style.fontSize = searchMap[property] + 'px'
     }
     for (var i = 0; i < savedMemes.length; i++) {
-        strHtml += `<img value="${savedMemes[i].selectedImgId}" class="img${savedMemes[i].selectedImgId}" onclick="onSelectImg(this)" src="${imgs[(savedMemes[i].selectedImgId)-1].url}" alt="">`
+        strHtml += `<img value="${savedMemes[i].selectedImgId}" class="img${savedMemes[i].selectedImgId}" onclick="onSelectImg(${savedMemes[i].selectedImgId})" src="${imgs[(savedMemes[i].selectedImgId) - 1].url}" alt="">`
     }
     document.querySelector(".gallery").classList.remove("active")
     document.querySelector(".saved-meme-btn").classList.add("active")
     document.querySelector('.grid-container').innerHTML = strHtml
     document.querySelector(".main-meme-generator").classList.add("hide")
     document.querySelector(".main-gallery").classList.remove("hide")
-
 
 }
 
@@ -58,16 +59,21 @@ function onSetFilterByTxt(input, ev) {
 }
 
 function showMoreKeyWords() {
-
     document.querySelector('.key-words .hidden-words').style.display = 'flex'
     document.querySelector('.key-words').style.minHeight = 120 + 'px'
     document.querySelector('.hidden-words').classList.remove('hide')
 }
 
 function showGallery() {
+    setgMeme()
     onInitGallery()
     document.querySelector(".gallery").classList.add("active")
     document.querySelector(".saved-meme-btn").classList.remove("active")
     document.querySelector(".main-meme-generator").classList.add("hide")
     document.querySelector(".main-gallery").classList.remove("hide")
+}
+
+function randomImg() {
+    var id = getRandomIntInclusive(1, getgImgs().length)
+    onSelectImg(id)
 }
