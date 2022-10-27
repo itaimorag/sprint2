@@ -9,8 +9,8 @@ function saveToStorage(key, val) {
 }
 
 function loadFromStorage(key) {
-    const str = localStorage.getItem(key)  
-     return JSON.parse(str)
+    const str = localStorage.getItem(key)
+    return JSON.parse(str)
 }
 function clearStorage() {
     localStorage.clear()

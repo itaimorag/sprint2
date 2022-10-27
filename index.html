@@ -10,24 +10,28 @@
 </head>
 
 <body onload="onInitGallery()">
-    
+
     <header class="flex align-center ">
         <section class="container header-wrapper flex  ">
             <div class="logo flex-1">
                 LOGO
             </div>
-            <nav id="mainMenu" class="main-menu-wrapper">
-                <ul class="main-menu clean-list flex align-center">
+            <nav id="mainMenu" class="main-menu-wrapper ">
+                <ul class="main-menu hide clean-list flex align-center">
+                    <li class="close-nav-il"><button class="close-nav-btn" onclick="toggleMenu()">X </button></li>
                     <li>
                         <button onclick="showGallery()" class="gallery active">Gallery</button>
                     </li>
                     <li>
                         <button>About</button>
                     </li>
-
+                    <li class="saved-meme-li hide">
+                        <button class="saved-meme-btn" onclick="showSavedMemes()">Saved Memes</button>
+                    </li>
                 </ul>
-              
+
             </nav>
+            <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
 
         </section>
     </header>
@@ -37,88 +41,93 @@
         <section class="main-header flex">
 
             <section class="search-bar">
-                <form class="search-bar-form" onsubmit="onSubmit(event)">
-                    <input type="text" name="txt" placeholder="Search" />
+                <form class="search-bar-form" onsubmit="onSetFilterByTxt(this.value,event)">
+                    <input onsubmit="onSetFilterByTxt(this.value,event)" type="text" name="txt" placeholder="Search" />
                     <button class="submit-btn">🔍</button>
+                </form>
             </section>
             <section class="key-words">
                 <div class="key-words-container">
-                    <button class="funny-btn">Funny</button>
-                    <button class="animal-btn">Animal</button>
-                    <button class="men-btn">Men</button>
+                    <button onclick="addFontSize(this)" class="funny-btn">Funny</button>
+                    <button onclick="addFontSize(this)" class="animal-btn">Animal</button>
+                    <button onclick="addFontSize(this)" class="men-btn">Men</button>
                 </div>
 
                 <section class="hidden-words hide">
-                    <button class="women-btn">Women</button>
-                    <button class="comic-btn">Comic</button>
-                    <button class="smile-btn">Smile</button>
+                    <button onclick="addFontSize(this)" class="women-btn">Women</button>
+                    <button onclick="addFontSize(this)" class="comic-btn">Comic</button>
+                    <button onclick="addFontSize(this)" class="smile-btn">Smile</button>
                 </section>
             </section>
-            <button class="more-btn">More</button>
+            <button onclick="showMoreKeyWords()" class="more-btn">More</button>
         </section>
 
         <section class="grid-container">
         </section>
     </main>
 
-
-    <main class="main-meme-generator hide flex space-between">
+    <main class="main-meme-generator hide flex space-around">
 
         <section class="canvas-container">
-        
+
         </section>
 
         <section class="meme-editor">
             <form onsubmit="event.preventDefault()" class="line-form">
-                <input oninput="setLineTxt(this.value)" id="line-placeholder" type="text" name="txt" placeholder="type" />
+                <input oninput="setLineTxt(this.value)" id="line-placeholder" type="text" name="txt"
+                    placeholder="type" />
             </form>
-                <section class="input-btns">
-                    <button class="go-up-btn">↑</button>
-                    <button class="go-down-btn">↓</button>
-                    <button onclick="changeRow()" class="change-line-btn">↷</button>
-                    <button class="add-line-btn">+</button>
-                    <button class="delete-line-btn">🗑</button>
+            <section class="input-btns">
+                <button class="go-up-btn">↑</button>
+                <button class="go-down-btn">↓</button>
+                <button onclick="changeRow()" class="change-line-btn">↷</button>
+                <button class="add-line-btn">+</button>
+                <button class="delete-line-btn">🗑</button>
+            </section>
+            <section class="txt-btns">
+                <section class="change-text">
+                    <button onclick="onChangeTextSize(this.value)" value="1" class="bigger-txt-btn"><img
+                            src="./img/meme-genrator img/A+.png" alt=""></button>
+                    <button onclick="onChangeTextSize(this.value)" value="-1" class="smaller-txt-btn"><img
+                            src="./img/meme-genrator img/A-.png" alt=""></button>
+                    <label for="colorpicker"><img src="./img/meme-genrator img/Forme_6.png" alt=""></label>
+                    <input oninput="changeColor(this.value)" type="color" id="colorpicker" value="#000000">
+                    <!-- <button onchange="changeColor()" class="color-line-btn"><img src="./img/meme-genrator img/Forme_6.png" alt=""></button> -->
                 </section>
-                <section class="txt-btns">
-                    <section class="change-text">
-                        <button onclick="onChangeTextSize(this.value)" value="1" class="bigger-txt-btn"><img src="./img/meme-genrator img/A+.png" alt=""></button>
-                        <button onclick="onChangeTextSize(this.value)" value="-1" class="smaller-txt-btn"><img src="./img/meme-genrator img/A-.png" alt=""></button>
-                        <label for="colorpicker"><img src="./img/meme-genrator img/Forme_6.png" alt=""></label>
-                        <input oninput="changeColor(this.value)" type="color" id="colorpicker" value="#000000">
-                        <!-- <button onchange="changeColor()" class="color-line-btn"><img src="./img/meme-genrator img/Forme_6.png" alt=""></button> -->
-                    </section>
-                    <section class="change-position">
-                        <button onclick="onChangePlace(this.value)" value="left" class="left-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_3.png" alt=""></button>
-                        <button onclick="onChangePlace(this.value)" value="center" class="center-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
-                        <button onclick="onChangePlace(this.value)" value="right" class="right-line-btn"><img src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
-                    </section>
-                    </section>
+                <section class="change-position">
+                    <button onclick="onChangePlace(this.value)" value="left" class="left-line-btn"><img
+                            src="./img/meme-genrator img/Rectangle_4_copie_3.png" alt=""></button>
+                    <button onclick="onChangePlace(this.value)" value="center" class="center-line-btn"><img
+                            src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
+                    <button onclick="onChangePlace(this.value)" value="right" class="right-line-btn"><img
+                            src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
+                </section>
+            </section>
+            <div class="save-meme">
+                <button onclick="onSaveMeme()" class="save-meme-btn">save meme</button>
+            </div>
 
-                <section class="download-share-btns">
-                    <button class="btn" onclick="uploadImg()">
-                        Upload Image from Canvas
-                      </button>
-                
-                      <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg"
-                        >Download as jpeg</a
-                      >
-                      <p class="user-msg"></p>
-                      <div class="share-container"></div>
-                </section>
+            <section class="download-share-btns">
+                <button class="upload-btn" onclick="uploadImg()"><img src="./img/meme-genrator img/Forme_7 (1).png"
+                        alt="">share</button>
+                <a href="#" class="download-btn" onclick="downloadCanvas(this)" download="file-name"><img
+                        src="/img/meme-genrator img/Forme_8 (1).png" alt=""> Download</a>
+
+            </section>
 
         </section>
 
 
     </main>
-    
+
 
 
 
     <script src="js/services/upload-service.js"></script>
     <script src="js/services/storage-service.js"></script>
+    <script src="js/services/meme-service.js"></script>
     <script src="js/main.js"></script>
     <script src="js/gallery-controller.js"></script>
-    <script src="js/services/meme-service.js"></script>
     <script src="js/services/util-service.js"></script>
 </body>
 
