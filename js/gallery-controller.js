@@ -9,7 +9,7 @@ function onInitGallery() {
         document.querySelector(`.${property}-btn`).style.fontSize = searchMap[property] + 'px'
     }
     for (var i = 0; i < imgs.length; i++) {
-        strHtml += `\n<img value="${imgs[i].id}" class="img${imgs[i].id}" onclick="onInit(this)" src="${imgs[i].url}" alt="">`
+        strHtml += `\n<img value="${imgs[i].id}" class="img${imgs[i].id}" onclick="onSelectImg(${imgs[i].id})" src="${imgs[i].url}" alt="">`
     }
     
     document.querySelector('.grid-container').innerHTML = strHtml
@@ -24,7 +24,7 @@ var strHtml = ''
         document.querySelector(`.${property}-btn`).style.fontSize = searchMap[property] + 'px'
     }
     for (var i = 0; i < savedMemes.length; i++) {
-        strHtml += `<img value="${savedMemes[i].selectedImgId}" class="img${savedMemes[i].selectedImgId}" onclick="onInit(this)" src="${imgs[(savedMemes[i].selectedImgId)-1].url}" alt="">`
+        strHtml += `<img value="${savedMemes[i].selectedImgId}" class="img${savedMemes[i].selectedImgId}" onclick="onSelectImg(this)" src="${imgs[(savedMemes[i].selectedImgId)-1].url}" alt="">`
     }
     document.querySelector(".gallery").classList.remove("active")
     document.querySelector(".saved-meme-btn").classList.add("active")

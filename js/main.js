@@ -9,7 +9,7 @@ const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 let gCurrShape = 'triangle'
 let gColor
 
-function onInit(imgNumber) {
+function onSelectImg(id) {
     document.querySelector(".main-meme-generator").classList.remove("hide")
     document.querySelector(".gallery").classList.remove("active")
     document.querySelector(".main-gallery").classList.add("hide")
@@ -23,18 +23,19 @@ function onInit(imgNumber) {
     resizeCanvas()
     addListeners()
     renderCanvas()
-    showCanvas(imgNumber)
+    showCanvas(id)
 }
 
 
 
-function showCanvas(imgNumber) {
-    updategMeme(imgNumber.classList.value.substring(3, imgNumber.classList.value.length))
+function showCanvas(id) {
+    updategMeme(id)
+    var imgs=getgImgs()
+    var currMeme = getgMeme()
     const img = new Image()
-    img.src = `${imgNumber.src.substring(23, imgNumber.src.length)}`
+    img.src = `${imgs.find(element => element.id === currMeme.selectedImgId).url}`
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xEnd,yEnd
-        var currMeme = getgMeme()
         for (var i = 0; i < currMeme.lines.length; i++) {
             //new
             drawText(currMeme.lines[i].txt, currMeme.lines[i].align, currMeme.lines[i].size + 30, currMeme.lines[i].size, currMeme.lines[i].color)
