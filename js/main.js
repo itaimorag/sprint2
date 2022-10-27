@@ -31,7 +31,7 @@ function onInit(imgNumber) {
 function showCanvas(imgNumber) {
     updategMeme(imgNumber.classList.value.substring(3, imgNumber.classList.value.length))
     const img = new Image()
-    img.src = `.${imgNumber.src.substring(22, imgNumber.src.length)}`
+    img.src = `${imgNumber.src.substring(23, imgNumber.src.length)}`
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xEnd,yEnd
         var currMeme = getgMeme()

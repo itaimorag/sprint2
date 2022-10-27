@@ -1,7 +1,7 @@
 'use strict'
 
-const SAVED_MEMES_KEY="savedMemesDB"
-var gSavedMemes= loadFromStorage(SAVED_MEMES_KEY) 
+const SAVED_MEMES_KEY = "savedMemesDB"
+var gSavedMemes = loadFromStorage(SAVED_MEMES_KEY)
 var gKeywordSearchCountMap = { 'funny': 12, 'animal': 16, 'men': 10 }
 var gImgs = [
     { id: 1, url: 'img/meme-imgs(square)/1.jpg', keywords: ['men', 'funny'] },
@@ -32,13 +32,21 @@ var gMeme = {
             txt: 'I sometimes eat Falafel',
             size: 20,
             align: 'center',
-            color: 'red'
+            color: 'red',
+            area: {
+                x: '',
+                j: ''
+            }
         },
         {
             txt: 'Hello world',
             size: 20,
             align: 'left',
-            color: 'blue'
+            color: 'blue',
+            area: {
+                x: '',
+                j: ''
+            }
         }
     ]
 }
@@ -65,7 +73,7 @@ function getImgsForDisplay() {
     }
 }
 
-function getgImgs(){
+function getgImgs() {
     return gImgs
 }
 
@@ -99,15 +107,15 @@ function changeColor(color) {
     renderMeme()
 }
 
-function saveMeme(){
-    if((!gSavedMemes)||(!gSavedMemes[0])) gSavedMemes=[]
+function saveMeme() {
+    if ((!gSavedMemes) || (!gSavedMemes[0])) gSavedMemes = []
     console.log(`gSavedMemes = `, gSavedMemes)
-     gSavedMemes.push(gMeme)
+    gSavedMemes.push(gMeme)
     console.log(`gSavedMemes = `, gSavedMemes)
-saveToStorage(SAVED_MEMES_KEY, gSavedMemes)
+    saveToStorage(SAVED_MEMES_KEY, gSavedMemes)
 }
-function getSavedMeme(){
-    var hi=loadFromStorage(SAVED_MEMES_KEY)
+function getSavedMeme() {
+    var hi = loadFromStorage(SAVED_MEMES_KEY)
     console.log(`hi = `, hi)
-return hi
+    return hi
 }
