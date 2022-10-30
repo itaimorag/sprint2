@@ -232,6 +232,13 @@ button {
   height: 60px;
 }
 
+.draw button{
+  font-size: 20px;
+  border-radius: 20px;
+  height: 50px;
+  background: linear-gradient(to right, #4d8bc5, #21ac91);
+}
+
 .stroke-btn{
   font-size: 40px;
 }

@@ -227,10 +227,10 @@ function setgMeme() {
                 area: {
                     xStart: 0,
                     xFinish: 0,
-                    yStart: 0,
+                    yStart: 50,
                     yFinish: 0
                 },
-                isStroked:false
+                isStroked:true
             },
             {
                 txt: 'Hello world',

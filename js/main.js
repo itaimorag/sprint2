@@ -8,7 +8,10 @@ let gImportedImgSrc
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 let gCurrShape = 'triangle'
 let gColor
-var gIsTextMoving = false
+let gIsTextMoving = false
+let gIsDrawing=false
+let gDrawing=[]
+
 
 function onSelectImg(id) {
     document.querySelector(".main-meme-generator").classList.remove("hide")
@@ -24,6 +27,7 @@ function onSelectImg(id) {
     resizeCanvas()
     addListeners()
     renderCanvas()
+    setgCounterLine()
     showCanvas(id)
 }
 
@@ -110,6 +114,7 @@ function onDeleteLine() {
 
 function onDown(ev) {
     const pos = getEvPos(ev)
+    
     if (!checkIfOnText(pos)) return
     gIsTextMoving = true
     //Save the pos we start from 
@@ -132,6 +137,7 @@ function onMove(ev) {
 
 function onUp() {
     gIsTextMoving = false
+    gIsDrawing=false
     document.body.style.cursor = 'grab'
 }
 
@@ -199,18 +205,15 @@ function drawText(text, xPref, y, sizeFont, color, xStart, isStroked) {
         yStart: y,
         yFinish: y - sizeFont
     }
-
     updateLine(area)
-    // gCtx.textBaseline = "hanging"
+    
     gCtx.fillText(text, x, y) // Draws (fills) a given text at the given (x, y) position.
     if(isStroked){
         gCtx.lineWidth   = 1;
         gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
     }
     gCtx.closePath()
-    // gCtx.beginPath()
-    // gCtx.strokeStyle = color
-    // gCtx.strokeText(text, x, y)
+ 
 }
 
 function toggleMenu() {
@@ -270,7 +273,25 @@ function renderImg(img) {
     gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
 }
 
+function onDraw(){
+    gIsDrawing=true
+}
+
 function onStroke(){
     changeStroke()
     renderMeme()
+}
+
+function notStraightLine(x, y,dx,dy){
+    gCtx.beginPath()
+    gCtx.moveTo(x, y)
+    gCtx.lineTo(dx,dy)
+    gCtx.strokeStyle = gColor
+    gCtx.stroke()
+    gCtx.closePath()
+}
+
+function onDeleteDraw(){
+    gDrawing=[]
+
 }

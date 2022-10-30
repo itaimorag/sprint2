@@ -42,9 +42,11 @@ function showSavedMemes() {
 function addFontSize(btn) {
     document.querySelector('.search-bar-form input').value=btn.innerText
     onSetFilterByTxt(btn.innerText)
+    var btnFontSizeNum
     var btnFontSize = btn.style.fontSize
     if (!btnFontSize) btnFontSize = '20px'
-    if (btnFontSize >= 35) return
+    btnFontSizeNum=btnFontSize.substring(0, btnFontSize.indexOf('p'))
+    if (btnFontSizeNum >= 35) return
     var searchMap = getgKeywordSearchCountMap()
     if (!searchMap[`${btn.innerText.toLowerCase()}`]) searchMap[`${btn.innerText.toLowerCase()}`] = 13
     searchMap[`${btn.innerText.toLowerCase()}`]++

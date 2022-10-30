@@ -39,7 +39,6 @@
     <main class="main-gallery ">
 
         <section class="main-header flex">
-
             <section class="search-bar">
                 <form class="search-bar-form" onsubmit="onSetFilterByTxt(this.value,event)">
                     <input onsubmit="onSetFilterByTxt(this.value,event)" type="text" name="txt" placeholder="Search" />
@@ -92,7 +91,7 @@
                             src="./img/meme-genrator img/A-.png" alt=""></button>
                     <label for="colorpicker"><img src="./img/meme-genrator img/Forme_6.png" alt=""></label>
                     <input oninput="changeColor(this.value)" type="color" id="colorpicker" value="#000000">
-                    
+
                 </section>
                 <section class="change-position">
                     <button onclick="onChangePlace(this.value)" value="left" class="left-line-btn"><img
@@ -101,9 +100,14 @@
                             src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
                     <button onclick="onChangePlace(this.value)" value="right" class="right-line-btn"><img
                             src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
-                            <button onclick="onStroke()" class="stroke-btn">S</button>
+                    <button onclick="onStroke()" class="stroke-btn">S</button>
                 </section>
             </section>
+            <!-- mabey delete -->
+            <!-- <section class="draw">
+                <button onclick="onDraw()" class="draw">✏️</button>
+                <button onclick="onDeleteDraw()" class="delete-draw">Delete drawing</button>
+            </section> -->
             <div class="save-meme">
                 <button onclick="onSaveMeme()" class="save-meme-btn">save meme</button>
             </div>
