@@ -66,7 +66,7 @@
         </section>
     </main>
 
-    <main class="main-meme-generator hide flex space-around">
+    <main class="main-meme-generator hide flex">
 
         <section class="canvas-container">
 
@@ -92,7 +92,7 @@
                             src="./img/meme-genrator img/A-.png" alt=""></button>
                     <label for="colorpicker"><img src="./img/meme-genrator img/Forme_6.png" alt=""></label>
                     <input oninput="changeColor(this.value)" type="color" id="colorpicker" value="#000000">
-                    <!-- <button onchange="changeColor()" class="color-line-btn"><img src="./img/meme-genrator img/Forme_6.png" alt=""></button> -->
+                    
                 </section>
                 <section class="change-position">
                     <button onclick="onChangePlace(this.value)" value="left" class="left-line-btn"><img
@@ -101,6 +101,7 @@
                             src="./img/meme-genrator img/Rectangle_4_copie_4.png" alt=""></button>
                     <button onclick="onChangePlace(this.value)" value="right" class="right-line-btn"><img
                             src="./img/meme-genrator img/Rectangle_4_copie_5.png" alt=""></button>
+                            <button onclick="onStroke()" class="stroke-btn">S</button>
                 </section>
             </section>
             <div class="save-meme">

@@ -8,6 +8,7 @@ let gImportedImgSrc
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 let gCurrShape = 'triangle'
 let gColor
+var gIsTextMoving = false
 
 function onSelectImg(id) {
     document.querySelector(".main-meme-generator").classList.remove("hide")
@@ -35,7 +36,7 @@ function showCanvas(id) {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xEnd,yEnd
         currMeme.lines.map((line, index) => {
-            drawText(line.txt, line.align, line.size + 30 + line.area.yStart, line.size, line.color)
+            drawText(line.txt, line.align, line.area.yStart, line.size, line.color, line.area.xStart, line.isStroked)
 
             document.getElementById('line-placeholder').value = currMeme.lines[currMeme.selectedLineIdx].txt
         });
@@ -49,21 +50,24 @@ function renderMeme() {
         img.src = `img/meme-imgs(square)/${currMeme.selectedImgId}.jpg`
         img.onload = () => {
             gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+
             currMeme.lines.map((line, index) => {
-                drawText(line.txt, line.align, line.size + 30 + line.area.yStart, line.size, line.color)
+                drawText(line.txt, line.align, line.area.yStart, line.size, line.color, line.area.xStart, line.isStroked)
                 document.getElementById('line-placeholder').value = currMeme.lines[currMeme.selectedLineIdx].txt
 
             });
         }
+
     }
     else {
         gCtx.drawImage(gImportedImgSrc, 0, 0, gElCanvas.width, gElCanvas.height)
         currMeme.lines.map((line, index) => {
-            drawText(line.txt, line.align, line.size + 30 + line.area.yStart, line.size, line.color)
+            drawText(line.txt, line.align, line.area.yStart, line.size, line.color, line.area.xStart, line.isStroked)
             document.getElementById('line-placeholder').value = currMeme.lines[0].txt
         });
 
     }
+    setgCounterLine()
 }
 
 function rowUpDown(symbol) {
@@ -78,7 +82,7 @@ function addListeners() {
     //Listen for resize ev 
     window.addEventListener('resize', () => {
         resizeCanvas()
-        renderCanvas()
+        renderMeme()
     })
 }
 
@@ -105,25 +109,32 @@ function onDeleteLine() {
 }
 
 function onDown(ev) {
-    gIsClicked = true
-    document.body.style.cursor = 'pointer'
     const pos = getEvPos(ev)
+    if (!checkIfOnText(pos)) return
+    gIsTextMoving = true
+    //Save the pos we start from 
     gStartPos = pos
-    gStartPosLine = pos
+    document.body.style.cursor = 'grabbing'
+
 }
 
 function onMove(ev) {
-    if (!gIsClicked) return
+    if (!gIsTextMoving) return
     const pos = getEvPos(ev)
-    draw(pos, gStartPosLine.x, gStartPosLine.y)
-    gStartPosLine = pos
+    //Calc the delta , the diff we moved
+    const dx = pos.x - gStartPos.x
+    const dy = pos.y - gStartPos.y
+    moveText(dx, dy)
+    gStartPos = pos
+    renderMeme()
 
 }
 
 function onUp() {
-    gIsClicked = false
-    document.body.style.cursor = 'context-menu'
+    gIsTextMoving = false
+    document.body.style.cursor = 'grab'
 }
+
 function onChangecolor(color) {
     changeColor(color)
 }
@@ -157,29 +168,49 @@ function getEvPos(ev) {
     }
     return pos
 }
-function drawText(text, xPref, y, sizeFont, color) {
+function drawText(text, xPref, y, sizeFont, color, xStart, isStroked) {
     var x
+    var area
+    gCtx.beginPath()
     gCtx.font = `${sizeFont}px Arial`
-    switch (xPref) {
-        case 'left':
-            x = 20
-            break;
-        case 'right':
-            x = (gElCanvas.width) - ((gCtx.measureText(text).width) + 20)
-            break;
-        case 'center':
-            x = ((gElCanvas.width) / 2) - (((gCtx.measureText(text).width) / (2)))
-            break;
-        default:
-            x = ((gElCanvas.width) / 2) - (((gCtx.measureText(text).width) / (2)))
+    if (!xStart) {
+        switch (xPref) {
+            case 'left':
+                x = 20
+                break;
+            case 'right':
+                x = (gElCanvas.width) - ((gCtx.measureText(text).width) + 20)
+                break;
+            case 'center':
+                x = ((gElCanvas.width) / 2) - (((gCtx.measureText(text).width) / (2)))
+                break;
+            default:
+                x = ((gElCanvas.width) / 2) - (((gCtx.measureText(text).width) / (2)))
+        }
     }
+    else x = xStart
 
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = color
-    gCtx.fillStyle = 'black'
+    gCtx.strokeStyle = 'black'
+    gCtx.fillStyle = color
+    area = {
+        xStart: x,
+        xFinish: x + gCtx.measureText(text).width,
+        yStart: y,
+        yFinish: y - sizeFont
+    }
 
+    updateLine(area)
+    // gCtx.textBaseline = "hanging"
     gCtx.fillText(text, x, y) // Draws (fills) a given text at the given (x, y) position.
-    gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
+    if(isStroked){
+        gCtx.lineWidth   = 1;
+        gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
+    }
+    gCtx.closePath()
+    // gCtx.beginPath()
+    // gCtx.strokeStyle = color
+    // gCtx.strokeText(text, x, y)
 }
 
 function toggleMenu() {
@@ -188,11 +219,16 @@ function toggleMenu() {
     document.querySelector('.main-menu').classList.toggle('hide')
 }
 
+function renderLine() {
+
+}
+
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
     gElCanvas.width = elContainer.offsetWidth
     gElCanvas.height = elContainer.offsetHeight
 }
+
 function renderCanvas() {
     gCtx.fillStyle = "#ffffff"
     gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height)
@@ -232,4 +268,9 @@ function loadImageFromInput(ev, onImageReady) {
 
 function renderImg(img) {
     gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+}
+
+function onStroke(){
+    changeStroke()
+    renderMeme()
 }

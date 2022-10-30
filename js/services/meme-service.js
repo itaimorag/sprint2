@@ -3,7 +3,7 @@
 const SAVED_MEMES_KEY = "savedMemesDB"
 var gSavedMemes = ''
 // loadFromStorage(SAVED_MEMES_KEY)
-var gKeywordSearchCountMap = { 'funny': 12, 'animal': 16, 'men': 10 }
+var gKeywordSearchCountMap = { 'funny': 22, 'animal': 25, 'men': 20 }
 var gImgs = [
     { id: 1, url: 'img/meme-imgs(square)/1.jpg', keywords: ['men', 'funny'] },
     { id: 2, url: 'img/meme-imgs(square)/2.jpg', keywords: ['funny', 'animal'] },
@@ -24,6 +24,7 @@ var gImgs = [
     { id: 17, url: 'img/meme-imgs(square)/17.jpg', keywords: ['funny', 'men'] },
     { id: 18, url: 'img/meme-imgs(square)/18.jpg', keywords: ['funny', 'men', 'smile', 'comic'] },
 ];
+var gCounterLine = 0
 var gImgsForDisplay
 var gMeme = {
     selectedImgId: 0,
@@ -37,9 +38,10 @@ var gMeme = {
             area: {
                 xStart: 0,
                 xFinish: 0,
-                yStart: 0,
-                yfinish: 0
-            }
+                yStart: 50,
+                yFinish: 0
+            },
+            isStroked:true
         },
         {
             txt: 'Hello world',
@@ -50,8 +52,9 @@ var gMeme = {
                 xStart: 0,
                 xFinish: 0,
                 yStart: 200,
-                yfinish: 0
-            }
+                yFinish: 0
+            },
+            isStroked:false
         }
     ]
 }
@@ -59,6 +62,10 @@ var gMeme = {
 
 function goUpOrDown(value) {
     gMeme.lines[gMeme.selectedLineIdx].area.yStart += value
+}
+
+function changeStroke(){
+    gMeme.lines[gMeme.selectedLineIdx].isStroked= !gMeme.lines[gMeme.selectedLineIdx].isStroked
 }
 
 function getgKeywordSearchCountMap() {
@@ -110,6 +117,20 @@ function changeTextSize(size) {
 }
 function changePlace(place) {
     gMeme.lines[gMeme.selectedLineIdx].align = place
+    var text=gMeme.lines[gMeme.selectedLineIdx].txt
+    switch (place) {
+        case 'left':
+            gMeme.lines[gMeme.selectedLineIdx].area.xStart = 20
+            break;
+        case 'right':
+            gMeme.lines[gMeme.selectedLineIdx].area.xStart = (gElCanvas.width) - ((gCtx.measureText(text).width) + 20)
+            break;
+        case 'center':
+            gMeme.lines[gMeme.selectedLineIdx].area.xStart = ((gElCanvas.width) / 2) - (((gCtx.measureText(text).width) / (2)))
+            break;
+        default:
+            gMeme.lines[gMeme.selectedLineIdx].area.xStart = ((gElCanvas.width) / 2) - (((gCtx.measureText(text).width) / (2)))
+    }
 }
 
 function changeColor(color) {
@@ -140,6 +161,20 @@ function deleteLine() {
     if (gMeme.selectedLineIdx !== 0) gMeme.selectedLineIdx--
 }
 
+function updateLine(area) {
+    if(area) {
+        gMeme.lines[gCounterLine].area = area
+        gCounterLine++
+    }
+    else{
+        return
+    }
+}
+
+function setgCounterLine() {
+    gCounterLine = 0
+}
+
 function createLine() {
     return ({
         txt: 'Hello human',
@@ -150,9 +185,33 @@ function createLine() {
             xStart: 0,
             xFinish: 0,
             yStart: 200,
-            yfinish: 0
-        }
+            yFinish: 0
+        },
+        isStroked:false
     })
+}
+
+function checkIfOnText(pos) {
+    var textPos
+    var lineIdx
+    textPos = gMeme.lines.filter((line, idx) => {
+        return ((line.area.xStart < pos.x) && (line.area.xFinish > pos.x) && (line.area.yStart > pos.y) && (line.area.yFinish < pos.y))
+    })
+
+    if (textPos[0]) {
+        lineIdx = gMeme.lines.findIndex((line) => line === textPos[0])
+        gMeme.selectedLineIdx = lineIdx
+        return true
+    }
+    return false
+}
+
+function moveText(dx, dy) {
+    gMeme.lines[gMeme.selectedLineIdx].area.xStart += dx
+    gMeme.lines[gMeme.selectedLineIdx].area.xFinish += dx
+    gMeme.lines[gMeme.selectedLineIdx].area.yStart += dy
+    gMeme.lines[gMeme.selectedLineIdx].area.yFinish += dy
+
 }
 
 function setgMeme() {
@@ -169,8 +228,9 @@ function setgMeme() {
                     xStart: 0,
                     xFinish: 0,
                     yStart: 0,
-                    yfinish: 0
-                }
+                    yFinish: 0
+                },
+                isStroked:false
             },
             {
                 txt: 'Hello world',
@@ -181,8 +241,9 @@ function setgMeme() {
                     xStart: 0,
                     xFinish: 0,
                     yStart: 200,
-                    yfinish: 0
-                }
+                    yFinish: 0
+                },
+                isStroked:false
             }
         ]
     }

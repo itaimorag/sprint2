@@ -10,7 +10,9 @@ function onInitGallery() {
         document.querySelector(`.${property}-btn`).style.fontSize = searchMap[property] + 'px'
     }
     strHtml += `<button onclick="randomImg()" class="random-img-btn ">❓</button>`
-    strHtml += `<input type="file" class="file-input btn"name="image" onchange="onImgInput(event)"/>`
+    strHtml += `<label class="label-my-file" for="file-input"><img src="img/meme-genrator img/istockphoto-688550958-612x612.jpg">
+    <input id="file-input" type="file" class="file-input btn"name="image" onchange="onImgInput(event)"/>
+    </label>`
     for (var i = 0; i < imgs.length; i++) {
         strHtml += `\n<img value="${imgs[i].id}" class="img${imgs[i].id}" onclick="onSelectImg(${imgs[i].id})" src="${imgs[i].url}" alt="">`
     }
@@ -28,6 +30,7 @@ function showSavedMemes() {
     for (var i = 0; i < savedMemes.length; i++) {
         strHtml += `<img value="${savedMemes[i].selectedImgId}" class="img${savedMemes[i].selectedImgId}" onclick="onSelectImg(${savedMemes[i].selectedImgId})" src="${imgs[(savedMemes[i].selectedImgId) - 1].url}" alt="">`
     }
+    toggleMenu()
     document.querySelector(".gallery").classList.remove("active")
     document.querySelector(".saved-meme-btn").classList.add("active")
     document.querySelector('.grid-container').innerHTML = strHtml
@@ -37,9 +40,10 @@ function showSavedMemes() {
 }
 
 function addFontSize(btn) {
+    document.querySelector('.search-bar-form input').value=btn.innerText
     onSetFilterByTxt(btn.innerText)
     var btnFontSize = btn.style.fontSize
-    if (!btnFontSize) btnFontSize = '13px'
+    if (!btnFontSize) btnFontSize = '20px'
     if (btnFontSize >= 35) return
     var searchMap = getgKeywordSearchCountMap()
     if (!searchMap[`${btn.innerText.toLowerCase()}`]) searchMap[`${btn.innerText.toLowerCase()}`] = 13
@@ -67,6 +71,7 @@ function showMoreKeyWords() {
 function showGallery() {
     setgMeme()
     onInitGallery()
+    toggleMenu()
     document.querySelector(".gallery").classList.add("active")
     document.querySelector(".saved-meme-btn").classList.remove("active")
     document.querySelector(".main-meme-generator").classList.add("hide")
